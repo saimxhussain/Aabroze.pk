@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AABROZE — Wear Your Everyday Beautifully</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #E8E0D5;
+    --bone: #F2EDE6;
+    --charcoal: #1A1814;
+    --warm-mid: #7A6F65;
+    --olive: #4A4D3A;
+    --rust: #8B4A2E;
+    --cream: #FAF7F2;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--charcoal);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── ANNOUNCEMENT BAR ── */
+  .announce {
+    background: var(--charcoal);
+    color: var(--bone);
+    text-align: center;
+    padding: 10px 40px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .announce span { flex: 1; text-align: center; }
+  .announce button {
+    background: none; border: none; color: var(--bone);
+    cursor: pointer; font-size: 16px; padding: 0 8px;
+  }
+  .announce .pak { font-size: 11px; color: #aaa; white-space: nowrap; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--cream);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    position: sticky; top: 0; z-index: 100;
+  }
+
+  nav.left { display: flex; gap: 32px; }
+  nav.left a {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--charcoal);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  nav.left a:hover { color: var(--warm-mid); }
+
+  .logo {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    text-align: center;
+  }
+  .logo-ring {
+    width: 44px; height: 44px;
+    border: 1px solid var(--charcoal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 4px;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+  }
+  .logo-name {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .header-icons { display: flex; gap: 20px; align-items: center; }
+  .header-icons button {
+    background: none; border: none; cursor: pointer;
+    font-size: 18px; color: var(--charcoal);
+    position: relative;
+  }
+  .cart-badge {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--charcoal); color: white;
+    width: 16px; height: 16px; border-radius: 50%;
+    font-size: 9px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 88vh;
+    min-height: 580px;
+    overflow: hidden;
+    background: var(--sand);
+  }
+
+  /* full-bleed video/image covers entire hero */
+  .hero-bg-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 1;
+  }
+
+  /* Left content overlay */
+  .hero-left {
+    position: absolute;
+    top: 0; left: 0;
+    width: 36%;
+    height: 100%;
+    padding: 0 48px 40px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 10;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--charcoal);
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .hero-tagline { max-width: 260px; }
+  .hero-tagline h2 {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.02;
+    margin-bottom: 12px;
+    color: var(--charcoal);
+  }
+  .hero-tagline p {
+    font-size: 12px;
+    color: var(--charcoal);
+    opacity: 0.7;
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .hero-btns { display: flex; gap: 20px; align-items: center; }
+
+  .btn-dark {
+    background: var(--charcoal);
+    color: var(--cream);
+    border: none;
+    padding: 14px 28px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    font-family: var(--sans);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .btn-dark:hover { opacity: 0.75; }
+
+  .link-subtle {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 3px;
+    white-space: nowrap;
+  }
+
+  /* Right overlays: "TRADITION IN EVERY THREAD" + dots */
+  .hero-right-text {
+    position: absolute;
+    top: 40px; right: 48px;
+    text-align: right;
+    z-index: 10;
+  }
+  .hero-right-text p {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    line-height: 2;
+  }
+
+  .hero-dots {
+    position: absolute;
+    bottom: 48px; right: 48px;
+    display: flex; flex-direction: column; gap: 10px;
+    z-index: 10;
+  }
+  .hero-dot {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 10px; color: var(--warm-mid);
+    justify-content: flex-end;
+  }
+  .hero-dot-line { width: 24px; height: 1px; background: var(--warm-mid); }
+  .hero-dot.active .hero-dot-line { background: var(--charcoal); width: 36px; }
+  .hero-dot.active { color: var(--charcoal); font-weight: 500; }
+
+  /* ── CATEGORIES STRIP ── */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .cat-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px;
+    border-right: 1px solid rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cat-item:hover { background: var(--sand); }
+
+  .cat-thumb {
+    width: 64px; height: 80px;
+    background: var(--sand);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .cat-thumb-inner {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  /* color block placeholders for categories */
+  .cat-ph { width: 100%; height: 100%; }
+  .ph-mustard { background: linear-gradient(160deg, #C8952A, #9B7020); }
+  .ph-cream-cat { background: linear-gradient(160deg, #E8DCC8, #C8B89A); }
+  .ph-teal { background: linear-gradient(160deg, #4A7A7A, #2A5A5A); }
+  .ph-olive { background: linear-gradient(160deg, #5A6040, #3A4020); }
+
+  .cat-info {}
+  .cat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .cat-num {
+    font-family: var(--serif);
+    font-size: 12px;
+    color: var(--warm-mid);
+  }
+
+  .cat-cta {
+    padding: 20px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
+  .cat-cta p {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    line-height: 1.6;
+  }
+  .cat-cta a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 8px;
+  }
+
+  /* ── NEW COLLECTION SPLIT ── */
+  .new-collection {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    height: 480px;
+  }
+
+  .nc-left {
+    background: #C8952A20;
+    overflow: hidden;
+  }
+  .nc-left-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .nc-img-ph {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #D4A840 0%, #A87830 60%, #7A5820 100%);
+    display: flex; align-items: flex-end; padding: 24px;
+  }
+  .nc-img-ph span { color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 0.2em; }
+
+  .nc-center {
+    background: var(--bone);
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .nc-sub {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    margin-bottom: 8px;
+  }
+  .nc-title {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .nc-desc {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    margin-bottom: 32px;
+  }
+  .nc-desc::after {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--warm-mid);
+    margin-top: 12px;
+  }
+
+  .nc-right {
+    overflow: hidden;
+    position: relative;
+  }
+  .nc-right-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .nc-right-ph {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #3A5030 0%, #2A3A20 100%);
+  }
+  .nc-watermark {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.4);
+  }
+  .nc-left-text {
+    position: absolute;
+    top: 40px; left: 40px;
+  }
+  .nc-col-wrap { position: relative; }
+  .nc-left-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    line-height: 1.8;
+  }
+  .nc-right-label {
+    position: absolute;
+    top: 40px; right: 40px;
+    text-align: right;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+  }
+
+  /* ── BESTSELLERS ── */
+  .bestsellers {
+    padding: 64px 40px;
+    background: var(--cream);
+  }
+
+  .bs-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  .bs-header-left {}
+  .bs-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .bs-title::after {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--charcoal);
+    margin-top: 8px;
+  }
+  .bs-sub {
+    font-size: 11px;
+    color: var(--warm-mid);
+    letter-spacing: 0.05em;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  .bs-nav { display: flex; gap: 8px; margin-top: 8px; }
+  .bs-arrow {
+    width: 36px; height: 36px;
+    border: 1px solid var(--charcoal);
+    background: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .bs-arrow:hover { background: var(--charcoal); color: white; }
+
+  .bs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .product-card { cursor: pointer; }
+  .product-img-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--sand);
+    margin-bottom: 14px;
+  }
+  .product-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover .product-img { transform: scale(1.03); }
+
+  /* Color placeholders for products */
+  .prod-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover .prod-ph { transform: scale(1.03); }
+  .ph-mustard-prod { background: linear-gradient(170deg, #D4A030 20%, #8B6A20 100%); }
+  .ph-cream-prod { background: linear-gradient(170deg, #E8DCC8 20%, #C8B8A0 100%); }
+  .ph-teal-prod { background: linear-gradient(170deg, #4A8080 20%, #2A5858 100%); }
+  .ph-maroon-prod { background: linear-gradient(170deg, #8B2A2A 20%, #5A1818 100%); }
+
+  .wishlist-btn {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.8);
+    border: none; width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .wishlist-btn:hover { background: white; }
+
+  .product-name {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-size: 12px;
+    color: var(--warm-mid);
+    margin-bottom: 12px;
+  }
+  .btn-cart {
+    width: 100%;
+    background: none;
+    border: 1px solid var(--charcoal);
+    padding: 9px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-cart:hover { background: var(--charcoal); color: white; }
+
+  /* ── COMMUNITY / FOOTER CTA ── */
+  .community-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height: 280px;
+  }
+
+  .comm-left {
+    background: var(--charcoal);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .comm-left-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #2A2620 0%, #1A1814 60%, #0E0C0A 100%);
+  }
+  .comm-left-decor {
+    position: absolute; top: -20px; right: -20px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .comm-left p {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--bone);
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+  }
+  .comm-left p::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: rgba(255,255,255,0.3);
+    margin-bottom: 20px;
+  }
+
+  .comm-center {
+    background: var(--bone);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .comm-center h3 {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .comm-center p {
+    font-size: 12px;
+    color: var(--warm-mid);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .email-form {
+    display: flex;
+    border: 1px solid var(--charcoal);
+  }
+  .email-input {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-family: var(--sans);
+    outline: none;
+    color: var(--charcoal);
+  }
+  .email-input::placeholder { color: var(--warm-mid); }
+  .email-submit {
+    background: var(--charcoal);
+    border: none; color: white;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  }
+  .email-submit:hover { opacity: 0.8; }
+
+  .comm-right {
+    background: var(--sand);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .comm-logo-ring {
+    width: 64px; height: 64px;
+    border: 1px solid var(--charcoal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .comm-brand-name {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .comm-tagline {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--warm-mid);
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--cream);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-copy {
+    font-size: 10px;
+    color: var(--warm-mid);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--warm-mid); }
+  .footer-social { display: flex; gap: 16px; align-items: center; }
+  .footer-social a {
+    font-size: 14px; color: var(--charcoal);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: var(--warm-mid); }
+  .footer-right {
+    font-size: 10px;
+    color: var(--warm-mid);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-right span { color: var(--charcoal); }
+
+  /* ── SECTION DIVIDER ── */
+  .divider { height: 1px; background: rgba(0,0,0,0.06); }
+
+  /* ── VIDEO SLIDESHOW ── */
+  .hero-video {
+    opacity: 0;
+    transition: opacity 3s ease;
+    z-index: 0;
+  }
+  .hero-video.active-video {
+    opacity: 1;
+    z-index: 1;
+  }
+  .hero-dot { cursor: pointer; }
+
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="announce">
+  <button>‹</button>
+  <span>FREE SHIPPING ON ORDERS ABOVE RS. 3000</span>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span class="pak">PAK ▾</span>
+    <button>›</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <nav class="left">
+    <a href="#">Shop</a>
+    <a href="#">New In</a>
+    <a href="#">Collections</a>
+    <a href="#">About</a>
+  </nav>
+
+  <div class="logo">
+    <img src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419232/Logo_-_Edges.png" alt="Aabroze" style="height:60px;width:60px;object-fit:contain;display:block;margin:0 auto;">
+  </div>
+
+  <div class="header-icons">
+    <!-- Search -->
+    <button aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+      </svg>
+    </button>
+    <!-- Account -->
+    <button aria-label="Account">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+    </button>
+    <!-- Bag -->
+    <button aria-label="Cart" style="position:relative">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-badge">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- Video 1 -->
+  <video class="hero-bg-img hero-video active-video" autoplay muted playsinline>
+    <source src="https://res.cloudinary.com/lqdyfc0b/video/upload/f_auto,q_auto/Woman_adjusting_outfit_fabric_20260915004202" type="video/mp4">
+  </video>
+  <!-- Video 2 -->
+  <video class="hero-bg-img hero-video" muted playsinline>
+    <source src="https://res.cloudinary.com/lqdyfc0b/video/upload/f_auto,q_auto/upscaled-video_1" type="video/mp4">
+  </video>
+  <!-- Video 3 -->
+  <video class="hero-bg-img hero-video" muted playsinline>
+    <source src="https://res.cloudinary.com/lqdyfc0b/video/upload/f_auto,q_auto/Video_3" type="video/mp4">
+  </video>
+
+  <!-- Top-left eyebrow, absolutely positioned -->
+  <div style="position:absolute;top:40px;left:48px;z-index:4;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;line-height:2;color:var(--charcoal);">WOMEN'S WEAR<br>PAKISTAN</div>
+
+  <!-- Left content panel, z-index 3 -->
+  <div class="hero-left">
+    <div class="hero-tagline">
+      <h2>Make an<br>Entrance.</h2>
+      <p>Thoughtfully designed pieces<br>for the women who do it all.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-dark">SHOP NEW IN &nbsp;→</a>
+        <a href="#" class="link-subtle">EXPLORE COLLECTIONS</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top-right label, z-index 4 -->
+  <div class="hero-right-text">
+    <p>TRADITION</p>
+    <p>IN EVERY</p>
+    <p>THREAD</p>
+  </div>
+
+  <!-- Bottom-right slide indicators, z-index 4 -->
+  <div class="hero-dots">
+    <div class="hero-dot active" data-index="0" onclick="switchVideo(0)"><span>01</span><div class="hero-dot-line"></div></div>
+    <div class="hero-dot" data-index="1" onclick="switchVideo(1)"><span>02</span><div class="hero-dot-line"></div></div>
+    <div class="hero-dot" data-index="2" onclick="switchVideo(2)"><span>03</span><div class="hero-dot-line"></div></div>
+  </div>
+
+</section>
+
+<!-- CATEGORIES STRIP -->
+<section class="categories">
+  <div class="cat-item">
+    <div class="cat-thumb"><div class="cat-ph ph-mustard"></div></div>
+    <div class="cat-info">
+      <span class="cat-label">Ethnic Wear</span>
+      <span class="cat-num">01</span>
+    </div>
+  </div>
+  <div class="cat-item">
+    <div class="cat-thumb"><div class="cat-ph ph-cream-cat"></div></div>
+    <div class="cat-info">
+      <span class="cat-label">Co-Ords</span>
+      <span class="cat-num">02</span>
+    </div>
+  </div>
+  <div class="cat-item">
+    <div class="cat-thumb"><div class="cat-ph ph-teal"></div></div>
+    <div class="cat-info">
+      <span class="cat-label">Everyday Wear</span>
+      <span class="cat-num">03</span>
+    </div>
+  </div>
+  <div class="cat-item">
+    <div class="cat-thumb"><div class="cat-ph ph-olive"></div></div>
+    <div class="cat-info">
+      <span class="cat-label">New In</span>
+      <span class="cat-num">04</span>
+    </div>
+  </div>
+  <div class="cat-cta">
+    <p>CLOTHES<br>THAT FEEL<br>LIKE HOME.</p>
+    <a href="#">VIEW ALL →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NEW COLLECTION SPLIT -->
+<section class="new-collection">
+  <div class="nc-col-wrap" style="position:relative;overflow:hidden;">
+    <div class="nc-img-ph">
+      <span>FABRIC DETAIL</span>
+    </div>
+    <div style="position:absolute;top:40px;left:40px;">
+      <p class="nc-left-label" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);line-height:1.8;">A LITTLE<br>ELEGANCE.<br>A LOT OF YOU.</p>
+    </div>
+  </div>
+
+  <div class="nc-center">
+    <p class="nc-sub">JUST ARRIVED</p>
+    <h2 class="nc-title">NEW<br>COLLECTION</h2>
+    <p class="nc-desc">PRINTS FOR<br>BRIGHTER DAYS.</p>
+    <a href="#" class="btn-dark" style="align-self:flex-start;">SHOP NOW →</a>
+  </div>
+
+  <div class="nc-col-wrap" style="position:relative;overflow:hidden;">
+    <div class="nc-right-ph"></div>
+    <div class="nc-right-label">FOR WOMEN<br>WHO MAKE<br>AN ENTRANCE.</div>
+    <div class="nc-watermark">AABROZE.PK</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BESTSELLERS -->
+<section class="bestsellers">
+  <div class="bs-header">
+    <div class="bs-header-left">
+      <div class="bs-title">BESTSELLERS</div>
+      <p class="bs-sub">LOVED BY YOU,<br>AGAIN AND AGAIN.</p>
+      <div class="bs-nav">
+        <button class="bs-arrow">‹</button>
+        <button class="bs-arrow">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bs-grid">
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img class="product-img img-default" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419923/Mehfil_Mustard_2P.png" alt="Mehfil Mustard 2P">
+        <img class="product-img img-hover" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419924/Mehfil_Mustard_3P.png" alt="Mehfil Mustard 3P">
+        <button class="wishlist-btn">♡</button>
+      </div>
+      <div class="product-name">Mehfil Mustard</div>
+      <div class="product-price">Rs. 2,999</div>
+      <button class="btn-cart">ADD TO CART</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img class="product-img img-default" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420330/Zarele_Cream_2P.png" alt="Zarele Cream 2P">
+        <img class="product-img img-hover" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420330/Zarele_Cream_3P.png" alt="Zarele Cream 3P">
+        <button class="wishlist-btn">♡</button>
+      </div>
+      <div class="product-name">Zarele Cream</div>
+      <div class="product-price">Rs. 2,999</div>
+      <button class="btn-cart">ADD TO CART</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img class="product-img img-default" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420641/Gulbahar_Teal_2P.png" alt="Gulbahar Teal 2P">
+        <img class="product-img img-hover" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420657/Gulbahar_Teal_3P.png" alt="Gulbahar Teal 3P">
+        <button class="wishlist-btn">♡</button>
+      </div>
+      <div class="product-name">Gulbahar Teal</div>
+      <div class="product-price">Rs. 2,999</div>
+      <button class="btn-cart">ADD TO CART</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img class="product-img img-default" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420936/Ruhani_Maroon_2P.png" alt="Ruhani Maroon 2P">
+        <img class="product-img img-hover" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420938/Ruhani_Maroon_3P.png" alt="Ruhani Maroon 3P">
+        <button class="wishlist-btn">♡</button>
+      </div>
+      <div class="product-name">Ruhani Maroon</div>
+      <div class="product-price">Rs. 2,999</div>
+      <button class="btn-cart">ADD TO CART</button>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY + LOGO CTA -->
+<section class="community-section">
+  <div class="comm-left">
+    <div class="comm-left-bg"></div>
+    <div class="comm-left-decor"></div>
+    <p>More<br>than clothes—<br>a feeling.</p>
+  </div>
+
+  <div class="comm-center">
+    <h3>JOIN OUR COMMUNITY</h3>
+    <p>Be the first to know about new drops,<br>exclusive offers, and more.</p>
+    <div class="email-form">
+      <input class="email-input" type="email" placeholder="Your email address">
+      <button class="email-submit">→</button>
+    </div>
+  </div>
+
+  <div class="comm-right">
+    <div class="comm-logo-ring">A</div>
+    <div class="comm-brand-name">Aabroze</div>
+    <div class="comm-tagline">Wear Your Everyday Beautifully</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2024 Aabroze. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">Shop</a>
+    <a href="#">Collections</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-social">
+    <a href="#">📷</a>
+    <a href="#">🎵</a>
+    <a href="#">👤</a>
+    <a href="#">📌</a>
+    <a href="#">▶</a>
+  </div>
+  <div class="footer-right">
+    <span>Pakistan</span> | Made with ♡
+  </div>
+</footer>
+
+<script>
+  const videos = document.querySelectorAll('.hero-video');
+  const dots = document.querySelectorAll('.hero-dot');
+  let current = 0;
+  let timer;
+
+  function switchVideo(index) {
+    videos[current].classList.remove('active-video');
+    videos[current].pause();
+    dots[current].classList.remove('active');
+
+    current = index;
+    videos[current].classList.add('active-video');
+    videos[current].currentTime = 0;
+    videos[current].play();
+    dots[current].classList.add('active');
+
+    clearInterval(timer);
+    startTimer();
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      switchVideo((current + 1) % videos.length);
+    }, 6000);
+  }
+
+  // Init: play first video immediately
+  window.addEventListener('DOMContentLoaded', () => {
+    videos[0].play().catch(() => {});
+    startTimer();
+  });
+
+  // On natural end, advance
+  videos.forEach((v, i) => {
+    v.addEventListener('ended', () => {
+      switchVideo((i + 1) % videos.length);
+    });
+  });
+</script>
+</body>
+</html>

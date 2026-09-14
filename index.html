@@ -339,7 +339,7 @@
   .nc-title {
     font-family: var(--serif);
     font-size: 56px;
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1;
     margin-bottom: 16px;
   }
@@ -827,26 +827,24 @@
 <div class="divider"></div>
 
 <!-- NEW COLLECTION SPLIT -->
-<section class="new-collection">
-  <div class="nc-col-wrap" style="position:relative;overflow:hidden;">
-    <img class="nc-left-img" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789422222/Shot_1.png" alt="New collection fabric shot">
-    <div style="position:absolute;top:40px;left:40px;">
-      <p class="nc-left-label" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.9);line-height:1.8;text-shadow:0 1px 4px rgba(0,0,0,0.4);">A LITTLE<br>ELEGANCE.<br>A LOT OF YOU.</p>
-    </div>
+<section class="new-collection" style="display:block;position:relative;overflow:hidden;background:url('https://res.cloudinary.com/lqdyfc0b/image/upload/v1789425911/Sec.png') center/cover no-repeat;">
+
+  <!-- top-left overlay text -->
+  <div style="position:absolute;top:40px;left:40px;z-index:5;">
+    <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#F2EDE6;line-height:1.8;">A LITTLE<br>ELEGANCE.<br>A LOT OF YOU.</p>
   </div>
 
-  <div class="nc-center">
+  <!-- center overlay text -->
+  <div style="position:absolute;top:50%;left:41%;transform:translate(-50%,-50%);z-index:5;display:flex;flex-direction:column;">
     <p class="nc-sub">JUST ARRIVED</p>
     <h2 class="nc-title">NEW<br>COLLECTION</h2>
     <p class="nc-desc">PRINTS FOR<br>BRIGHTER DAYS.</p>
     <a href="#" class="btn-dark" style="align-self:flex-start;">SHOP NOW →</a>
   </div>
 
-  <div class="nc-col-wrap" style="position:relative;overflow:hidden;">
-    <img class="nc-right-img" src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789422221/Close_Shot.png" alt="New collection close shot">
-    <div class="nc-right-label">FOR WOMEN<br>WHO MAKE<br>AN ENTRANCE.</div>
-    <div class="nc-watermark">AABROZE.PK</div>
-  </div>
+  <!-- bottom-right watermark -->
+  <div class="nc-watermark" style="position:absolute;bottom:20px;right:20px;color:rgba(255,255,255,0.6);z-index:5;">AABROZE.PK</div>
+
 </section>
 
 <div class="divider"></div>
@@ -937,7 +935,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2024 Aabroze. All rights reserved.</div>
+  <div class="footer-copy">© 2026 Aabroze. All rights reserved.</div>
   <div class="footer-links">
     <a href="#">Shop</a>
     <a href="#">Collections</a>

@@ -39,15 +39,17 @@
 
   .hero { position: relative; height: 88vh; min-height: 580px; overflow: hidden; background: var(--sand); }
   .hero-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; z-index: 1; }
+  .hero-overlay { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: linear-gradient(100deg, rgba(20,18,14,0.55) 0%, rgba(20,18,14,0.28) 32%, rgba(20,18,14,0) 58%); }
+  .hero-label { color: var(--cream); }
   .hero-left { position: absolute; top: 0; left: 0; width: 36%; height: 100%; padding: 0 48px 40px 36px; display: flex; flex-direction: column; justify-content: flex-end; z-index: 10; }
   .hero-eyebrow { font-size: 10px; letter-spacing: 0.22em; color: var(--charcoal); text-transform: uppercase; line-height: 1.8; }
   .hero-tagline { max-width: 260px; }
-  .hero-tagline h2 { font-family: var(--serif); font-size: 42px; font-weight: 400; line-height: 1.02; margin-bottom: 12px; color: var(--charcoal); }
-  .hero-tagline p { font-size: 12px; color: var(--charcoal); opacity: 0.7; line-height: 1.65; margin-bottom: 20px; }
+  .hero-tagline h2 { font-family: var(--serif); font-size: 42px; font-weight: 400; line-height: 1.02; margin-bottom: 12px; color: var(--cream); text-shadow: 0 2px 14px rgba(0,0,0,0.25); }
+  .hero-tagline p { font-size: 12px; color: var(--cream); opacity: 0.88; line-height: 1.65; margin-bottom: 20px; }
   .hero-btns { display: flex; gap: 20px; align-items: center; }
   .btn-dark { background: var(--charcoal); color: var(--cream); border: none; padding: 14px 28px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; transition: opacity 0.2s; font-family: var(--sans); font-weight: 500; white-space: nowrap; }
   .btn-dark:hover { opacity: 0.75; }
-  .link-subtle { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--charcoal); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; white-space: nowrap; }
+  .link-subtle { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; white-space: nowrap; }
   .hero-right-text { position: absolute; top: 40px; right: 48px; text-align: right; z-index: 10; }
   .hero-right-text p { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--charcoal); line-height: 2; }
   .hero-dots { position: absolute; bottom: 48px; right: 48px; display: flex; flex-direction: column; gap: 10px; z-index: 10; }
@@ -174,12 +176,16 @@
     .announce { padding: 8px 16px; font-size: 10px; }
     .hero { height: 78vh; min-height: 440px; }
     .hero-bg-img { object-position: center center; }
+    .hero-overlay { background: linear-gradient(to top, rgba(20,18,14,0.68) 0%, rgba(20,18,14,0.32) 42%, rgba(20,18,14,0) 72%); }
+    .hero-label { color: var(--charcoal); }
     .hero-left { width: 100%; padding: 0 20px 32px; }
     .hero-tagline { max-width: 100%; }
     .hero-tagline h2 { font-size: 32px; }
     .hero-btns { flex-wrap: wrap; gap: 12px; }
     .hero-right-text { display: none; }
-    .hero-dots { bottom: 24px; right: 20px; }
+    .hero-dots { top: 40px; bottom: auto; right: 20px; flex-direction: row; gap: 14px; }
+    .hero-dot { flex-direction: column-reverse; gap: 5px; }
+    .hero-dot-line { width: 100%; }
     .categories { grid-template-columns: repeat(2, 1fr); }
     .cat-item { padding: 14px 16px; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
     .cat-cta { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 16px; }
@@ -261,7 +267,8 @@
     <source src="https://res.cloudinary.com/lqdyfc0b/video/upload/v1789466165/m_Video_3.mp4" type="video/mp4" media="(max-width: 768px)">
     <source src="https://res.cloudinary.com/lqdyfc0b/video/upload/f_auto,q_auto/Video_3" type="video/mp4">
   </video>
-  <div style="position:absolute;top:40px;left:48px;z-index:4;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;line-height:2;color:var(--charcoal);">WOMEN'S WEAR<br>PAKISTAN</div>
+  <div class="hero-overlay"></div>
+  <div class="hero-label" style="position:absolute;top:40px;left:48px;z-index:10;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;line-height:2;">WOMEN'S WEAR<br>PAKISTAN</div>
   <div class="hero-left">
     <div class="hero-tagline">
       <h2>Make an<br>Entrance.</h2>

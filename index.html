@@ -189,9 +189,10 @@
     .categories { grid-template-columns: repeat(2, 1fr); }
     .cat-item { padding: 14px 16px; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
     .cat-cta { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 16px; }
-    .nc-overlay-left { position: static; margin-bottom: 24px; padding-left: 20px; }
+    .nc-overlay-left { display: none; }
     .nc-overlay-center { position: static; transform: none; padding-left: 20px; }
-    .new-collection { background-position: 68% center !important; }
+    .new-collection { background-position: right center !important; }
+    .new-collection::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(250,247,242,0.95) 0%, rgba(250,247,242,0.65) 40%, rgba(250,247,242,0) 72%); }
     .nc-title { font-size: 38px; }
     .bestsellers { padding: 40px 16px; }
     .bs-header { flex-direction: column; gap: 16px; }

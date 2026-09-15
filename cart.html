@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart & Checkout — AABROZE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--sand:#E8E0D5;--bone:#F2EDE6;--charcoal:#1A1814;--warm-mid:#7A6F65;--olive:#4A4D3A;--rust:#8B4A2E;--cream:#FAF7F2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--charcoal);font-size:14px;line-height:1.5;}
+  .announce{background:var(--charcoal);color:var(--bone);text-align:center;padding:10px 40px;font-size:11px;letter-spacing:0.08em;display:flex;align-items:center;justify-content:space-between;}
+  .announce span{flex:1;text-align:center;}.announce button{background:none;border:none;color:var(--bone);cursor:pointer;font-size:16px;padding:0 8px;}.announce .pak{font-size:11px;color:#aaa;white-space:nowrap;}
+  header{background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:100;}
+  nav.left{display:flex;gap:32px;}
+  nav.left a{font-family:var(--sans);font-size:11px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;text-transform:uppercase;}
+  nav.left a:hover{color:var(--warm-mid);}
+  .logo{position:absolute;left:50%;transform:translateX(-50%);text-align:center;}
+  .header-icons{display:flex;gap:20px;align-items:center;}
+  .header-icons button{background:none;border:none;cursor:pointer;font-size:18px;color:var(--charcoal);position:relative;}
+  .cart-badge{position:absolute;top:-6px;right:-6px;background:var(--charcoal);color:white;width:16px;height:16px;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;}
+  .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--charcoal);}
+  .mobile-nav{display:flex;flex-direction:column;background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);position:sticky;top:70px;z-index:99;overflow:hidden;max-height:0;transition:max-height 0.25s ease;}
+  .mobile-nav.open{max-height:300px;}
+  .mobile-nav a{padding:16px 24px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.06);}
+
+  /* CHECKOUT STEPS */
+  .checkout-steps{display:flex;align-items:center;justify-content:center;gap:0;padding:28px 40px;border-bottom:1px solid rgba(0,0,0,0.06);background:var(--bone);}
+  .step{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--warm-mid);}
+  .step.active{color:var(--charcoal);font-weight:500;}
+  .step.done{color:var(--warm-mid);}
+  .step-num{width:28px;height:28px;border:1px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+  .step.active .step-num{background:var(--charcoal);color:white;border-color:var(--charcoal);}
+  .step.done .step-num{background:var(--warm-mid);color:white;border-color:var(--warm-mid);}
+  .step-line{width:60px;height:1px;background:rgba(0,0,0,0.15);margin:0 16px;}
+
+  /* CART PAGE (step 1) */
+  .cart-layout{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:60vh;}
+  .cart-items-col{padding:48px 40px;border-right:1px solid rgba(0,0,0,0.06);}
+  .cart-title{font-family:var(--serif);font-size:36px;font-weight:400;margin-bottom:32px;}
+  .cart-empty{text-align:center;padding:80px 20px;}
+  .cart-empty p{font-size:13px;color:var(--warm-mid);margin-bottom:24px;line-height:1.7;}
+  .cart-empty a{display:inline-flex;align-items:center;gap:10px;background:var(--charcoal);color:var(--cream);border:none;padding:14px 28px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;text-decoration:none;font-family:var(--sans);}
+
+  .cart-item{display:grid;grid-template-columns:100px 1fr auto;gap:20px;padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.06);align-items:start;}
+  .cart-item-img{width:100px;height:133px;object-fit:cover;display:block;background:var(--sand);}
+  .cart-item-name{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+  .cart-item-meta{font-size:11px;color:var(--warm-mid);margin-bottom:12px;line-height:1.7;}
+  .qty-row{display:flex;align-items:center;gap:0;}
+  .qty-btn{width:32px;height:32px;border:1px solid rgba(0,0,0,0.15);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-family:var(--sans);}
+  .qty-btn:hover{background:var(--sand);}
+  .qty-num{width:36px;height:32px;border-top:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;font-size:13px;}
+  .cart-item-price{font-size:14px;font-weight:500;white-space:nowrap;}
+  .remove-btn{background:none;border:none;cursor:pointer;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-mid);margin-top:8px;padding:0;font-family:var(--sans);}
+  .remove-btn:hover{color:var(--charcoal);}
+
+  .cart-summary-col{padding:48px 40px;background:var(--bone);}
+  .summary-title{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:28px;}
+  .summary-title::after{content:'';display:block;width:32px;height:1px;background:var(--charcoal);margin-top:10px;}
+  .summary-row{display:flex;justify-content:space-between;margin-bottom:16px;font-size:12px;color:var(--warm-mid);}
+  .summary-row.total{font-size:15px;color:var(--charcoal);font-weight:500;border-top:1px solid rgba(0,0,0,0.1);padding-top:16px;margin-top:8px;}
+  .promo-row{display:flex;border:1px solid rgba(0,0,0,0.15);margin-bottom:28px;}
+  .promo-input{flex:1;border:none;background:none;padding:11px 14px;font-size:11px;font-family:var(--sans);outline:none;color:var(--charcoal);}
+  .promo-input::placeholder{color:var(--warm-mid);}
+  .promo-btn{background:var(--charcoal);border:none;color:white;padding:11px 16px;cursor:pointer;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--sans);}
+  .checkout-btn{width:100%;background:var(--charcoal);color:var(--cream);border:none;padding:18px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);margin-top:16px;transition:opacity 0.2s;}
+  .checkout-btn:hover{opacity:0.8;}
+  .shipping-note{font-size:10px;color:var(--warm-mid);text-align:center;margin-top:12px;letter-spacing:0.05em;}
+  .free-shipping-bar{background:var(--sand);padding:12px 16px;margin-bottom:20px;font-size:10px;letter-spacing:0.08em;text-align:center;}
+  .fsh-fill{height:3px;background:var(--sand);margin-top:8px;position:relative;}
+  .fsh-progress{height:3px;background:var(--charcoal);transition:width 0.4s;}
+
+  /* STEP 2: PAYMENT */
+  .payment-layout{display:none;grid-template-columns:1fr 380px;gap:0;min-height:60vh;}
+  .payment-layout.visible{display:grid;}
+  .payment-col{padding:48px 40px;border-right:1px solid rgba(0,0,0,0.06);}
+  .payment-title{font-family:var(--serif);font-size:36px;font-weight:400;margin-bottom:8px;}
+  .payment-sub{font-size:12px;color:var(--warm-mid);margin-bottom:36px;}
+  .pay-section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:16px;margin-top:28px;}
+  .pay-section-label:first-of-type{margin-top:0;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .field-row.single{grid-template-columns:1fr;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-mid);}
+  .field input,.field select,.field textarea{border:1px solid rgba(0,0,0,0.15);background:none;padding:12px 14px;font-size:12px;font-family:var(--sans);outline:none;color:var(--charcoal);width:100%;transition:border-color 0.2s;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--charcoal);}
+  .field textarea{resize:vertical;min-height:80px;}
+
+  .payment-methods{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .pay-method{display:flex;align-items:center;gap:14px;border:1px solid rgba(0,0,0,0.15);padding:16px 20px;cursor:pointer;transition:border-color 0.15s;}
+  .pay-method.selected{border-color:var(--charcoal);background:rgba(0,0,0,0.02);}
+  .pay-method input{accent-color:var(--charcoal);transform:scale(1.3);}
+  .pay-method-icon{font-size:20px;color:var(--warm-mid);}
+  .pay-method-text{display:flex;flex-direction:column;}
+  .pay-method-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+  .pay-method-desc{font-size:10px;color:var(--warm-mid);letter-spacing:0.04em;}
+  .pay-action-row{display:flex;gap:14px;margin-top:8px;}
+  .btn-back{background:none;border:1px solid rgba(0,0,0,0.2);padding:16px 24px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);}
+  .btn-back:hover{background:var(--sand);}
+  .btn-place{flex:1;background:var(--charcoal);color:var(--cream);border:none;padding:16px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:opacity 0.2s;}
+  .btn-place:hover{opacity:0.8;}
+
+  /* STEP 3: THANK YOU */
+  .thankyou-wrap{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 40px;min-height:60vh;}
+  .thankyou-wrap.visible{display:flex;}
+  .ty-ring{width:80px;height:80px;border:1px solid var(--charcoal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px;}
+  .ty-title{font-family:var(--serif);font-size:48px;font-weight:400;margin-bottom:12px;}
+  .ty-sub{font-size:12px;color:var(--warm-mid);line-height:1.8;margin-bottom:8px;}
+  .ty-order{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:40px;}
+  .ty-order span{color:var(--charcoal);font-weight:500;}
+  .ty-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .ty-btn-primary{background:var(--charcoal);color:var(--cream);border:none;padding:14px 32px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;text-decoration:none;font-family:var(--sans);display:inline-block;}
+  .ty-btn-outline{background:none;border:1px solid var(--charcoal);color:var(--charcoal);padding:14px 32px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;text-decoration:none;font-family:var(--sans);display:inline-block;}
+  .ty-btn-primary:hover{opacity:0.8;} .ty-btn-outline:hover{background:var(--charcoal);color:var(--cream);}
+
+  footer{background:var(--cream);border-top:1px solid rgba(0,0,0,0.08);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;}
+  .footer-copy{font-size:10px;color:var(--warm-mid);}
+  .footer-links{display:flex;gap:24px;}
+  .footer-links-centered{position:absolute;left:50%;transform:translateX(-50%);}
+  .footer-links a{font-size:10px;letter-spacing:0.08em;color:var(--charcoal);text-decoration:none;}
+  .footer-links a:hover{color:var(--warm-mid);}
+  .footer-social{display:flex;gap:16px;align-items:center;}
+  .footer-social-row{display:flex;align-items:center;gap:16px;}
+  .footer-social a{font-size:17px;color:var(--charcoal);text-decoration:none;transition:color 0.2s;display:inline-flex;align-items:center;}
+  .footer-social a:hover{color:var(--warm-mid);}
+  .footer-right{font-size:10px;color:var(--warm-mid);}
+  .divider{height:1px;background:rgba(0,0,0,0.06);}
+
+  @media(max-width:900px){
+    .cart-layout,.payment-layout{grid-template-columns:1fr;}
+    .cart-summary-col{border-right:none;border-top:1px solid rgba(0,0,0,0.06);}
+    .payment-col{border-right:none;}
+  }
+  @media(max-width:768px){
+    header{padding:0 16px;} nav.left{display:none;} .hamburger{display:block;}
+    .announce{padding:8px 16px;font-size:10px;}
+    .checkout-steps{padding:20px 16px;gap:0;} .step-line{width:32px;margin:0 8px;} .step span:last-child{display:none;}
+    .cart-items-col,.payment-col{padding:32px 16px;}
+    .cart-summary-col{padding:32px 16px;}
+    .cart-title,.payment-title{font-size:28px;}
+    .field-row{grid-template-columns:1fr;}
+    .pay-action-row{flex-direction:column;}
+    .ty-title{font-size:36px;}
+    .ty-actions{flex-direction:column;align-items:center;}
+    footer{padding:20px 16px;flex-direction:column;gap:16px;}
+    .footer-links-centered{position:static;transform:none;flex-wrap:wrap;justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">
+  <button>‹</button>
+  <span>FREE SHIPPING ON ORDERS ABOVE RS. 3000</span>
+  <div style="display:flex;align-items:center;gap:8px"><span class="pak">PAK ▾</span><button>›</button></div>
+</div>
+
+<header>
+  <button class="hamburger" aria-label="Menu" onclick="toggleMobileNav()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <nav class="left">
+    <a href="collection.html">Shop</a>
+    <a href="collection.html">New In</a>
+    <a href="collection.html">Collections</a>
+    <a href="about.html">About</a>
+  </nav>
+  <div class="logo">
+    <a href="index.html"><img src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419232/Logo_-_Edges.png" alt="Aabroze" style="height:60px;width:60px;object-fit:contain;display:block;margin:0 auto;"></a>
+  </div>
+  <div class="header-icons">
+    <button aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg></button>
+    <button aria-label="Account"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+    <button aria-label="Cart" style="position:relative">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="collection.html" onclick="toggleMobileNav()">Shop</a>
+  <a href="about.html" onclick="toggleMobileNav()">About</a>
+</div>
+
+<!-- STEPS -->
+<div class="checkout-steps" id="stepsBar">
+  <div class="step active" id="step1ind"><div class="step-num">1</div><span>Your Bag</span></div>
+  <div class="step-line"></div>
+  <div class="step" id="step2ind"><div class="step-num">2</div><span>Delivery & Payment</span></div>
+  <div class="step-line"></div>
+  <div class="step" id="step3ind"><div class="step-num">3</div><span>Confirmed</span></div>
+</div>
+
+<!-- STEP 1: CART -->
+<div class="cart-layout" id="cartStep">
+  <div class="cart-items-col">
+    <div class="cart-title">Your Bag</div>
+    <div id="cartItemsWrap"></div>
+  </div>
+  <div class="cart-summary-col">
+    <div class="summary-title">Order Summary</div>
+    <div class="free-shipping-bar" id="freeShipBar">
+      <span id="freeShipMsg">Add Rs. <span id="freeShipAmount">3000</span> more for free shipping</span>
+      <div class="fsh-fill"><div class="fsh-progress" id="fshProgress" style="width:0%"></div></div>
+    </div>
+    <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">Rs. 0</span></div>
+    <div class="summary-row"><span>Shipping</span><span id="summaryShipping">Rs. 250</span></div>
+    <div class="summary-row"><span>Promo discount</span><span id="summaryDiscount">— Rs. 0</span></div>
+    <div class="summary-row total"><span>Total</span><span id="summaryTotal">Rs. 0</span></div>
+    <div class="promo-row" style="margin-top:20px;">
+      <input class="promo-input" type="text" placeholder="Promo code" id="promoInput">
+      <button class="promo-btn" onclick="applyPromo()">Apply</button>
+    </div>
+    <button class="checkout-btn" onclick="goToPayment()">PROCEED TO CHECKOUT →</button>
+    <p class="shipping-note">🔒 Secure checkout &nbsp;·&nbsp; Cash on delivery available</p>
+  </div>
+</div>
+
+<!-- STEP 2: PAYMENT & DELIVERY -->
+<div class="payment-layout" id="paymentStep">
+  <div class="payment-col">
+    <div class="payment-title">Delivery & Payment</div>
+    <div class="payment-sub">All orders ship within 2–4 business days.</div>
+
+    <div class="pay-section-label">Delivery Information</div>
+    <div class="field-row">
+      <div class="field"><label>First Name</label><input type="text" id="fname" placeholder="Aisha"></div>
+      <div class="field"><label>Last Name</label><input type="text" id="lname" placeholder="Khan"></div>
+    </div>
+    <div class="field-row single">
+      <div class="field"><label>Phone / WhatsApp</label><input type="tel" id="phone" placeholder="03XX XXXXXXX"></div>
+    </div>
+    <div class="field-row single">
+      <div class="field"><label>Full Address</label><input type="text" id="address" placeholder="House #, Street, Area"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>City</label><input type="text" id="city" placeholder="Karachi"></div>
+      <div class="field"><label>Province</label>
+        <select id="province">
+          <option value="">Select</option>
+          <option>Sindh</option><option>Punjab</option><option>KPK</option>
+          <option>Balochistan</option><option>AJK</option><option>Gilgit-Baltistan</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row single">
+      <div class="field"><label>Order Notes (optional)</label><textarea id="notes" placeholder="Leave instructions for packing or delivery…"></textarea></div>
+    </div>
+
+    <div class="pay-section-label">Payment Method</div>
+    <div class="payment-methods">
+      <label class="pay-method selected" id="pmCOD">
+        <input type="radio" name="payMethod" value="cod" checked onchange="selectPayMethod('cod')">
+        <span class="pay-method-icon">💵</span>
+        <span class="pay-method-text">
+          <span class="pay-method-name">Cash on Delivery</span>
+          <span class="pay-method-desc">Pay when your order arrives</span>
+        </span>
+      </label>
+      <label class="pay-method" id="pmEasy">
+        <input type="radio" name="payMethod" value="easypaisa" onchange="selectPayMethod('easypaisa')">
+        <span class="pay-method-icon">📱</span>
+        <span class="pay-method-text">
+          <span class="pay-method-name">Easypaisa / JazzCash</span>
+          <span class="pay-method-desc">Send payment to 03282301296 — include order name</span>
+        </span>
+      </label>
+      <label class="pay-method" id="pmBank">
+        <input type="radio" name="payMethod" value="bank" onchange="selectPayMethod('bank')">
+        <span class="pay-method-icon">🏦</span>
+        <span class="pay-method-text">
+          <span class="pay-method-name">Bank Transfer</span>
+          <span class="pay-method-desc">Details shared via WhatsApp after order is placed</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="pay-action-row">
+      <button class="btn-back" onclick="goToCart()">← Back to Bag</button>
+      <button class="btn-place" onclick="placeOrder()">PLACE ORDER →</button>
+    </div>
+  </div>
+
+  <!-- order summary (payment step) -->
+  <div class="cart-summary-col">
+    <div class="summary-title">Order Summary</div>
+    <div id="paymentItemsList"></div>
+    <div style="margin-top:20px;">
+      <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal2">Rs. 0</span></div>
+      <div class="summary-row"><span>Shipping</span><span id="summaryShipping2">Rs. 250</span></div>
+      <div class="summary-row total"><span>Total</span><span id="summaryTotal2">Rs. 0</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: THANK YOU -->
+<div class="thankyou-wrap" id="thankyouStep">
+  <div class="ty-ring">✓</div>
+  <div class="ty-title">Order Placed!</div>
+  <p class="ty-sub">Thank you for shopping with Aabroze.<br>Your order is confirmed and will be packed with love.</p>
+  <p class="ty-order">Order reference: <span id="orderRef">#AAB-000</span></p>
+  <div class="ty-actions">
+    <a href="collection.html" class="ty-btn-primary">Continue Shopping</a>
+    <a href="https://wa.me/923282301296" target="_blank" class="ty-btn-outline">WhatsApp Us</a>
+  </div>
+</div>
+
+<footer style="justify-content:space-between;">
+  <div class="footer-copy">© 2026 Aabroze. All rights reserved.</div>
+  <div class="footer-links footer-links-centered">
+    <a href="collection.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="about.html#contact">Contact</a>
+  </div>
+  <div class="footer-social-row">
+    <div class="footer-social">
+      <a href="https://www.instagram.com/aabroze.pk" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@aabroze.pk" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/aabroze.pk" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+    </div>
+    <div class="footer-right">PK</div>
+  </div>
+</footer>
+
+<script>
+  let promoApplied=false, promoDiscount=0, activePayMethod='cod';
+  const FREE_SHIP_THRESHOLD=3000, SHIPPING_COST=250, PROMO_CODES={'AABROZE10':10,'WELCOME15':15};
+
+  function getCart(){try{return JSON.parse(localStorage.getItem('aabroze_cart')||'[]');}catch{return[];}}
+  function saveCart(c){localStorage.setItem('aabroze_cart',JSON.stringify(c));updateBadge();renderCart();}
+  function updateBadge(){const n=getCart().reduce((s,i)=>s+i.qty,0);document.getElementById('cartBadge').textContent=n;}
+
+  function formatRs(n){return 'Rs. '+n.toLocaleString();}
+
+  function getSubtotal(){return getCart().reduce((s,i)=>s+i.price*i.qty,0);}
+  function getShipping(sub){return sub>=FREE_SHIP_THRESHOLD?0:SHIPPING_COST;}
+  function getTotal(sub,ship){return sub+ship-promoDiscount;}
+
+  function renderCart(){
+    const cart=getCart();
+    const wrap=document.getElementById('cartItemsWrap');
+    if(cart.length===0){
+      wrap.innerHTML=`<div class="cart-empty"><p>Your bag is empty.<br>Discover pieces made for you.</p><a href="collection.html">SHOP THE COLLECTION →</a></div>`;
+    } else {
+      wrap.innerHTML=cart.map((item,idx)=>`
+        <div class="cart-item">
+          <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-meta">
+              ${item.option==='2p'?'2 Piece Suit':'3 Piece Suit'} · Size ${item.size}<br>
+              ${formatRs(item.price)} each
+            </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+              <div class="qty-num">${item.qty}</div>
+              <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem(${idx})">Remove</button>
+          </div>
+          <div class="cart-item-price">${formatRs(item.price*item.qty)}</div>
+        </div>
+      `).join('');
+    }
+    updateSummary();
+  }
+
+  function updateSummary(){
+    const sub=getSubtotal(), ship=getShipping(sub), disc=promoApplied?promoDiscount:0, total=sub+ship-disc;
+    document.getElementById('summarySubtotal').textContent=formatRs(sub);
+    document.getElementById('summaryShipping').textContent=sub>=FREE_SHIP_THRESHOLD?'FREE':formatRs(ship);
+    document.getElementById('summaryDiscount').textContent=disc>0?'− '+formatRs(disc):'— Rs. 0';
+    document.getElementById('summaryTotal').textContent=formatRs(total);
+    // free shipping bar
+    const pct=Math.min((sub/FREE_SHIP_THRESHOLD)*100,100);
+    document.getElementById('fshProgress').style.width=pct+'%';
+    if(sub>=FREE_SHIP_THRESHOLD){
+      document.getElementById('freeShipMsg').textContent='🎉 You have free shipping!';
+    } else {
+      const need=FREE_SHIP_THRESHOLD-sub;
+      document.getElementById('freeShipMsg').innerHTML='Add <strong>'+formatRs(need)+'</strong> more for free shipping';
+    }
+    // payment step summary
+    document.getElementById('summarySubtotal2').textContent=formatRs(sub);
+    document.getElementById('summaryShipping2').textContent=sub>=FREE_SHIP_THRESHOLD?'FREE':formatRs(SHIPPING_COST);
+    document.getElementById('summaryTotal2').textContent=formatRs(sub+(sub>=FREE_SHIP_THRESHOLD?0:SHIPPING_COST));
+    // payment items list
+    const cart=getCart();
+    document.getElementById('paymentItemsList').innerHTML=cart.map(item=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:11px;">
+        <span style="color:var(--charcoal);">${item.name}<br><span style="color:var(--warm-mid);">${item.option==='2p'?'2P':'3P'} · ${item.size} · ×${item.qty}</span></span>
+        <span>${formatRs(item.price*item.qty)}</span>
+      </div>
+    `).join('');
+  }
+
+  function changeQty(idx,delta){
+    const cart=getCart();
+    cart[idx].qty=Math.max(1,cart[idx].qty+delta);
+    saveCart(cart);
+  }
+  function removeItem(idx){
+    const cart=getCart();
+    cart.splice(idx,1);
+    saveCart(cart);
+  }
+
+  function applyPromo(){
+    const code=document.getElementById('promoInput').value.trim().toUpperCase();
+    if(PROMO_CODES[code]){
+      const pct=PROMO_CODES[code];
+      promoDiscount=Math.round(getSubtotal()*pct/100);
+      promoApplied=true;
+      updateSummary();
+      showToast(pct+'% off applied!');
+    } else {
+      showToast('Invalid promo code.');
+    }
+  }
+
+  function goToPayment(){
+    if(getCart().length===0){showToast('Your bag is empty.');return;}
+    document.getElementById('cartStep').style.display='none';
+    document.getElementById('paymentStep').classList.add('visible');
+    document.getElementById('step1ind').classList.remove('active');
+    document.getElementById('step1ind').classList.add('done');
+    document.getElementById('step2ind').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function goToCart(){
+    document.getElementById('cartStep').style.display='';
+    document.getElementById('paymentStep').classList.remove('visible');
+    document.getElementById('step1ind').classList.add('active');
+    document.getElementById('step1ind').classList.remove('done');
+    document.getElementById('step2ind').classList.remove('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function selectPayMethod(method){
+    activePayMethod=method;
+    document.getElementById('pmCOD').classList.toggle('selected',method==='cod');
+    document.getElementById('pmEasy').classList.toggle('selected',method==='easypaisa');
+    document.getElementById('pmBank').classList.toggle('selected',method==='bank');
+  }
+
+  function placeOrder(){
+    const fname=document.getElementById('fname').value.trim();
+    const phone=document.getElementById('phone').value.trim();
+    const address=document.getElementById('address').value.trim();
+    const city=document.getElementById('city').value.trim();
+    if(!fname||!phone||!address||!city){showToast('Please fill all required fields.');return;}
+    const ref='#AAB-'+Math.floor(10000+Math.random()*90000);
+    document.getElementById('orderRef').textContent=ref;
+    localStorage.removeItem('aabroze_cart');
+    document.getElementById('paymentStep').classList.remove('visible');
+    document.getElementById('thankyouStep').classList.add('visible');
+    document.getElementById('stepsBar').style.display='none';
+    document.getElementById('step2ind').classList.remove('active');
+    document.getElementById('step2ind').classList.add('done');
+    document.getElementById('step3ind').classList.add('active');
+    updateBadge();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function showToast(msg){const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--cream);padding:12px 28px;font-size:11px;letter-spacing:0.1em;z-index:999;';document.body.appendChild(t);setTimeout(()=>t.remove(),2400);}
+  function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');}
+
+  updateBadge();
+  renderCart();
+</script>
+</body>
+</html>

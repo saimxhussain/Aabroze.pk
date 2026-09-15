@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All — AABROZE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--sand:#E8E0D5;--bone:#F2EDE6;--charcoal:#1A1814;--warm-mid:#7A6F65;--olive:#4A4D3A;--rust:#8B4A2E;--cream:#FAF7F2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--charcoal);font-size:14px;line-height:1.5;}
+
+  .announce{background:var(--charcoal);color:var(--bone);text-align:center;padding:10px 40px;font-size:11px;letter-spacing:0.08em;display:flex;align-items:center;justify-content:space-between;}
+  .announce span{flex:1;text-align:center;}.announce button{background:none;border:none;color:var(--bone);cursor:pointer;font-size:16px;padding:0 8px;}.announce .pak{font-size:11px;color:#aaa;white-space:nowrap;}
+  header{background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:100;}
+  nav.left{display:flex;gap:32px;}
+  nav.left a{font-family:var(--sans);font-size:11px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;text-transform:uppercase;}
+  nav.left a:hover,nav.left a.active{color:var(--warm-mid);}
+  .logo{position:absolute;left:50%;transform:translateX(-50%);text-align:center;}
+  .header-icons{display:flex;gap:20px;align-items:center;}
+  .header-icons button{background:none;border:none;cursor:pointer;font-size:18px;color:var(--charcoal);position:relative;}
+  .cart-badge{position:absolute;top:-6px;right:-6px;background:var(--charcoal);color:white;width:16px;height:16px;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;}
+  .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--charcoal);}
+  .mobile-nav{display:flex;flex-direction:column;background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);position:sticky;top:70px;z-index:99;overflow:hidden;max-height:0;transition:max-height 0.25s ease;}
+  .mobile-nav.open{max-height:300px;}
+  .mobile-nav a{padding:16px 24px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.06);}
+
+  /* PAGE HERO */
+  .page-hero{background:var(--sand);padding:64px 40px 40px;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .page-hero h1{font-family:var(--serif);font-size:52px;font-weight:400;line-height:1;margin-bottom:8px;}
+  .page-hero p{font-size:12px;color:var(--warm-mid);letter-spacing:0.08em;}
+
+  /* FILTER BAR */
+  .filter-bar{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid rgba(0,0,0,0.06);background:var(--cream);position:sticky;top:70px;z-index:50;}
+  .filter-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-tab{background:none;border:1px solid rgba(0,0,0,0.15);padding:8px 18px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+  .filter-tab:hover,.filter-tab.active{background:var(--charcoal);color:white;border-color:var(--charcoal);}
+  .filter-right{display:flex;align-items:center;gap:16px;}
+  .sort-select{border:1px solid rgba(0,0,0,0.15);background:none;padding:8px 12px;font-size:10px;letter-spacing:0.08em;font-family:var(--sans);cursor:pointer;color:var(--charcoal);outline:none;}
+  .product-count{font-size:10px;color:var(--warm-mid);letter-spacing:0.08em;}
+
+  /* GRID */
+  .shop-grid-wrap{padding:32px 40px 64px;}
+  .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+
+  .product-card{cursor:pointer;}
+  .product-img-wrap{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--sand);margin-bottom:14px;}
+  .product-img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;display:block;}
+  .img-hover{position:absolute;inset:0;opacity:0;transition:opacity 0.4s ease;}
+  .product-card:hover .img-hover{opacity:1;}
+  .product-card:hover .img-default{transform:scale(1.03);}
+  .wishlist-btn{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.8);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.2s;}
+  .wishlist-btn:hover{background:white;}
+  .product-badge{position:absolute;top:12px;left:12px;background:var(--rust);color:white;font-size:9px;letter-spacing:0.1em;padding:4px 8px;text-transform:uppercase;}
+  .product-name{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+  .product-price{font-size:12px;color:var(--warm-mid);margin-bottom:12px;}
+  .btn-cart{width:100%;background:none;border:1px solid var(--charcoal);padding:9px;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;font-family:var(--sans);}
+  .btn-cart:hover{background:var(--charcoal);color:white;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(20,17,13,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--cream);max-width:1050px;width:100%;display:grid;grid-template-columns:1fr 1fr;position:relative;max-height:92vh;overflow:hidden;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,0.35);}
+  .modal-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.9);border:none;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:19px;z-index:3;}
+  .modal-img-wrap{position:relative;overflow:hidden;min-height:540px;}
+  .modal-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+  .modal-info{padding:48px 44px;display:flex;flex-direction:column;overflow-y:auto;}
+  .modal-eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:12px;}
+  .modal-name{font-family:var(--serif);font-size:34px;font-weight:500;margin-bottom:12px;}
+  .modal-price{font-size:23px;font-weight:500;color:var(--charcoal);margin-bottom:30px;}
+  .modal-option-label{font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:14px;}
+  .modal-sizes{display:flex;gap:12px;margin-bottom:34px;}
+  .modal-size-btn{width:56px;height:56px;border:1px solid rgba(0,0,0,0.2);background:none;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:var(--sans);}
+  .modal-size-btn.selected{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal);}
+  .modal-options{display:flex;flex-direction:column;gap:14px;margin-bottom:40px;}
+  .modal-option{display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(0,0,0,0.15);padding:18px 22px;cursor:pointer;font-size:15px;transition:border-color 0.15s;}
+  .modal-option.selected{border-color:var(--charcoal);background:rgba(0,0,0,0.03);}
+  .modal-option input{accent-color:var(--charcoal);transform:scale(1.3);}
+  .modal-option-left{display:flex;align-items:center;gap:12px;}
+  .modal-btn-row{display:flex;gap:16px;margin-top:auto;}
+  .modal-addcart,.modal-buynow{flex:1;border:none;padding:18px 12px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-family:var(--sans);}
+  .modal-addcart{background:var(--charcoal);color:var(--cream);flex-direction:column;gap:3px;}
+  .modal-addcart-price{font-size:11px;opacity:0.75;letter-spacing:0.05em;}
+  .modal-addcart:hover{opacity:0.85;}
+  .modal-buynow{background:none;border:1px solid var(--charcoal);color:var(--charcoal);}
+  .modal-buynow:hover{background:var(--charcoal);color:var(--cream);}
+
+  footer{background:var(--cream);border-top:1px solid rgba(0,0,0,0.08);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;}
+  .footer-copy{font-size:10px;color:var(--warm-mid);}
+  .footer-links{display:flex;gap:24px;}
+  .footer-links-centered{position:absolute;left:50%;transform:translateX(-50%);}
+  .footer-links a{font-size:10px;letter-spacing:0.08em;color:var(--charcoal);text-decoration:none;}
+  .footer-links a:hover{color:var(--warm-mid);}
+  .footer-social{display:flex;gap:16px;align-items:center;}
+  .footer-social-row{display:flex;align-items:center;gap:16px;}
+  .footer-social a{font-size:17px;color:var(--charcoal);text-decoration:none;transition:color 0.2s;display:inline-flex;align-items:center;}
+  .footer-social a:hover{color:var(--warm-mid);}
+  .footer-right{font-size:10px;color:var(--warm-mid);}
+  .divider{height:1px;background:rgba(0,0,0,0.06);}
+
+  @media(max-width:1024px){.shop-grid{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:768px){
+    header{padding:0 16px;} nav.left{display:none;} .hamburger{display:block;}
+    .announce{padding:8px 16px;font-size:10px;}
+    .page-hero{padding:40px 16px 28px;} .page-hero h1{font-size:36px;}
+    .filter-bar{padding:12px 16px;top:70px;} .filter-tabs{gap:6px;}
+    .filter-tab{padding:6px 12px;font-size:9px;}
+    .shop-grid-wrap{padding:20px 16px 48px;} .shop-grid{grid-template-columns:repeat(2,1fr);}
+    .modal-box{grid-template-columns:1fr;max-width:340px;border-radius:24px;max-height:88vh;}
+    .modal-img-wrap{min-height:220px;} .modal-info{padding:24px 22px;text-align:center;align-items:center;}
+    .modal-name{font-size:22px;} .modal-sizes{justify-content:center;}
+    .modal-option{padding:13px 16px;font-size:12px;} .modal-btn-row{flex-direction:column;width:100%;}
+    .modal-addcart,.modal-buynow{padding:15px;font-size:11px;}
+    footer{padding:20px 16px;flex-direction:column;gap:16px;}
+    .footer-links-centered{position:static;transform:none;flex-wrap:wrap;justify-content:center;}
+  }
+  @media(max-width:480px){.shop-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="announce">
+  <button>‹</button>
+  <span>FREE SHIPPING ON ORDERS ABOVE RS. 3000</span>
+  <div style="display:flex;align-items:center;gap:8px"><span class="pak">PAK ▾</span><button>›</button></div>
+</div>
+
+<header>
+  <button class="hamburger" aria-label="Menu" onclick="toggleMobileNav()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <nav class="left">
+    <a href="collection.html" class="active">Shop</a>
+    <a href="collection.html">New In</a>
+    <a href="collection.html">Collections</a>
+    <a href="about.html">About</a>
+  </nav>
+  <div class="logo">
+    <a href="index.html"><img src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419232/Logo_-_Edges.png" alt="Aabroze" style="height:60px;width:60px;object-fit:contain;display:block;margin:0 auto;"></a>
+  </div>
+  <div class="header-icons">
+    <button aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg></button>
+    <button aria-label="Account"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+    <button aria-label="Cart" onclick="window.location.href='cart.html'" style="position:relative">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="collection.html" onclick="toggleMobileNav()">Shop</a>
+  <a href="about.html" onclick="toggleMobileNav()">About</a>
+  <a href="cart.html" onclick="toggleMobileNav()">Cart</a>
+</div>
+
+<div class="page-hero">
+  <h1>The Collection</h1>
+  <p id="pageSubtitle">All pieces — crafted for the everyday and the extraordinary.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all" onclick="filterProducts('all')">All</button>
+    <button class="filter-tab" data-filter="ethnic" onclick="filterProducts('ethnic')">Ethnic Wear</button>
+    <button class="filter-tab" data-filter="coords" onclick="filterProducts('coords')">Co-Ords</button>
+    <button class="filter-tab" data-filter="everyday" onclick="filterProducts('everyday')">Everyday</button>
+    <button class="filter-tab" data-filter="new" onclick="filterProducts('new')">New In</button>
+  </div>
+  <div class="filter-right">
+    <span class="product-count" id="productCount">12 pieces</span>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Sort by</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name">Name</option>
+    </select>
+  </div>
+</div>
+
+<div class="shop-grid-wrap">
+  <div class="shop-grid" id="shopGrid"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="productModal" onclick="if(event.target===this)closeProductModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeProductModal()">✕</button>
+    <div class="modal-img-wrap"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-info">
+      <div class="modal-eyebrow">New Collection</div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-price" id="modalPrice">Rs. 1,999</div>
+      <div class="modal-option-label">Select Size</div>
+      <div class="modal-sizes">
+        <button class="modal-size-btn" data-size="S" onclick="selectSize('S')">S</button>
+        <button class="modal-size-btn selected" data-size="M" onclick="selectSize('M')">M</button>
+        <button class="modal-size-btn" data-size="L" onclick="selectSize('L')">L</button>
+        <button class="modal-size-btn" data-size="XL" onclick="selectSize('XL')">XL</button>
+      </div>
+      <div class="modal-option-label">Select Set</div>
+      <div class="modal-options">
+        <label class="modal-option selected" id="opt2p">
+          <span class="modal-option-left"><input type="radio" name="pieceOption" value="2p" checked onchange="selectOption('2p')">2 Piece Suit</span>
+          <span id="opt2pPrice">Rs. 1,799</span>
+        </label>
+        <label class="modal-option" id="opt3p">
+          <span class="modal-option-left"><input type="radio" name="pieceOption" value="3p" onchange="selectOption('3p')">3 Piece Suit</span>
+          <span id="opt3pPrice">Rs. 2,099</span>
+        </label>
+      </div>
+      <div class="modal-btn-row">
+        <button class="modal-buynow" onclick="addToCartAndGo()">BUY NOW</button>
+        <button class="modal-addcart" onclick="addToCartModal()"><span>ADD TO CART</span><span class="modal-addcart-price">Rs. <span id="modalCartPrice">1,799</span></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="justify-content:space-between;">
+  <div class="footer-copy">© 2026 Aabroze. All rights reserved.</div>
+  <div class="footer-links footer-links-centered">
+    <a href="collection.html">Shop</a>
+    <a href="collection.html">Collections</a>
+    <a href="about.html">About</a>
+    <a href="about.html#contact">Contact</a>
+  </div>
+  <div class="footer-social-row">
+    <div class="footer-social">
+      <a href="https://www.instagram.com/aabroze.pk" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@aabroze.pk" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/aabroze.pk" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+    </div>
+    <div class="footer-right">PK</div>
+  </div>
+</footer>
+
+<script>
+  const PRODUCTS = [
+    {id:1,name:'Mehfil Mustard',cat:'ethnic',badge:'Bestseller',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419923/Mehfil_Mustard_2P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419924/Mehfil_Mustard_3P.png'},
+    {id:2,name:'Zarele Cream',cat:'everyday',badge:'',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420330/Zarele_Cream_2P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420330/Zarele_Cream_3P.png'},
+    {id:3,name:'Gulbahar Teal',cat:'coords',badge:'New',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420641/Gulbahar_Teal_2P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420657/Gulbahar_Teal_3P.png'},
+    {id:4,name:'Ruhani Maroon',cat:'ethnic',badge:'',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420936/Ruhani_Maroon_2P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420938/Ruhani_Maroon_3P.png'},
+    {id:5,name:'Mehfil Mustard 3P',cat:'ethnic',badge:'',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419924/Mehfil_Mustard_3P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419923/Mehfil_Mustard_2P.png'},
+    {id:6,name:'Zarele Cream 3P',cat:'new',badge:'New',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420330/Zarele_Cream_3P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420330/Zarele_Cream_2P.png'},
+    {id:7,name:'Gulbahar Teal 3P',cat:'new',badge:'New',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420657/Gulbahar_Teal_3P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420641/Gulbahar_Teal_2P.png'},
+    {id:8,name:'Ruhani Maroon 3P',cat:'everyday',badge:'',price2p:1799,price3p:2099,img2p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420938/Ruhani_Maroon_3P.png',img3p:'https://res.cloudinary.com/lqdyfc0b/image/upload/v1789420936/Ruhani_Maroon_2P.png'},
+  ];
+
+  let activeFilter='all', sortMode='default';
+
+  function getCart(){try{return JSON.parse(localStorage.getItem('aabroze_cart')||'[]');}catch{return[];}}
+  function saveCart(c){localStorage.setItem('aabroze_cart',JSON.stringify(c));updateBadge();}
+  function updateBadge(){const n=getCart().reduce((s,i)=>s+i.qty,0);document.getElementById('cartBadge').textContent=n;}
+  updateBadge();
+
+  function renderGrid(){
+    let products=[...PRODUCTS];
+    if(activeFilter!=='all') products=products.filter(p=>p.cat===activeFilter);
+    if(sortMode==='price-asc') products.sort((a,b)=>a.price2p-b.price2p);
+    if(sortMode==='price-desc') products.sort((a,b)=>b.price2p-a.price2p);
+    if(sortMode==='name') products.sort((a,b)=>a.name.localeCompare(b.name));
+    document.getElementById('productCount').textContent=products.length+' piece'+(products.length===1?'':'s');
+    document.getElementById('shopGrid').innerHTML=products.map(p=>`
+      <div class="product-card" onclick="openProductModal(${p.id})">
+        <div class="product-img-wrap">
+          <img class="product-img img-default" src="${p.img2p}" alt="${p.name}" loading="lazy">
+          <img class="product-img img-hover" src="${p.img3p}" alt="${p.name}" loading="lazy">
+          ${p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+          <button class="wishlist-btn" onclick="event.stopPropagation()">♡</button>
+        </div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-price">From Rs. ${p.price2p.toLocaleString()}</div>
+        <button class="btn-cart" onclick="event.stopPropagation();openProductModal(${p.id})">ADD TO CART</button>
+      </div>
+    `).join('');
+  }
+
+  function filterProducts(cat){
+    activeFilter=cat;
+    document.querySelectorAll('.filter-tab').forEach(t=>t.classList.toggle('active',t.dataset.filter===cat));
+    renderGrid();
+  }
+
+  function sortProducts(val){sortMode=val;renderGrid();}
+
+  // read URL param on load
+  window.addEventListener('DOMContentLoaded',()=>{
+    const p=new URLSearchParams(window.location.search).get('cat');
+    if(p) filterProducts(p); else renderGrid();
+  });
+
+  const PIECE_PRICES={'2p':1999,'3p':2299};
+  const SIZE_OFFSET={'XL':0,'L':-100,'M':-200,'S':-300};
+  let currentOption='2p',currentSize='M',currentProductId=null,currentProductName='';
+  function getPrice(o,s){return PIECE_PRICES[o]+SIZE_OFFSET[s];}
+
+  function openProductModal(id){
+    const p=PRODUCTS.find(x=>x.id===id);
+    if(!p)return;
+    currentProductId=id; currentProductName=p.name;
+    document.getElementById('modalName').textContent=p.name;
+    document.getElementById('modalImg').dataset.img2p=p.img2p;
+    document.getElementById('modalImg').dataset.img3p=p.img3p;
+    currentOption='2p'; currentSize='M';
+    document.querySelector('input[value="2p"]').checked=true;
+    document.querySelectorAll('.modal-size-btn').forEach(b=>b.classList.toggle('selected',b.dataset.size==='M'));
+    refreshModal();
+    document.getElementById('productModal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeProductModal(){document.getElementById('productModal').classList.remove('open');document.body.style.overflow='';}
+  function selectSize(size){currentSize=size;document.querySelectorAll('.modal-size-btn').forEach(b=>b.classList.toggle('selected',b.dataset.size===size));refreshModal();}
+  function selectOption(option){currentOption=option;document.getElementById('opt2p').classList.toggle('selected',option==='2p');document.getElementById('opt3p').classList.toggle('selected',option==='3p');refreshModal();}
+  function refreshModal(){
+    document.getElementById('opt2pPrice').textContent='Rs. '+getPrice('2p',currentSize).toLocaleString();
+    document.getElementById('opt3pPrice').textContent='Rs. '+getPrice('3p',currentSize).toLocaleString();
+    const price=getPrice(currentOption,currentSize);
+    document.getElementById('modalPrice').textContent='Rs. '+price.toLocaleString();
+    document.getElementById('modalCartPrice').textContent=price.toLocaleString();
+    const mi=document.getElementById('modalImg');
+    mi.src=currentOption==='2p'?mi.dataset.img2p:mi.dataset.img3p;
+  }
+  function addToCartModal(){
+    const cart=getCart();
+    const price=getPrice(currentOption,currentSize);
+    const key=currentProductName+'|'+currentOption+'|'+currentSize;
+    const existing=cart.find(i=>i.key===key);
+    if(existing) existing.qty++; else cart.push({key,name:currentProductName,option:currentOption,size:currentSize,price,qty:1,img:document.getElementById('modalImg').src});
+    saveCart(cart); closeProductModal(); showToast('Added to cart!');
+  }
+  function addToCartAndGo(){addToCartModal();window.location.href='cart.html';}
+  function showToast(msg){const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--cream);padding:12px 28px;font-size:11px;letter-spacing:0.1em;z-index:999;';document.body.appendChild(t);setTimeout(()=>t.remove(),2200);}
+  function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProductModal();});
+</script>
+</body>
+</html>

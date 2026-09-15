@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — AABROZE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--sand:#E8E0D5;--bone:#F2EDE6;--charcoal:#1A1814;--warm-mid:#7A6F65;--olive:#4A4D3A;--rust:#8B4A2E;--cream:#FAF7F2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--charcoal);font-size:14px;line-height:1.5;}
+
+  .announce{background:var(--charcoal);color:var(--bone);text-align:center;padding:10px 40px;font-size:11px;letter-spacing:0.08em;display:flex;align-items:center;justify-content:space-between;}
+  .announce span{flex:1;text-align:center;}.announce button{background:none;border:none;color:var(--bone);cursor:pointer;font-size:16px;padding:0 8px;}.announce .pak{font-size:11px;color:#aaa;white-space:nowrap;}
+  header{background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:100;}
+  nav.left{display:flex;gap:32px;}
+  nav.left a{font-family:var(--sans);font-size:11px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;text-transform:uppercase;}
+  nav.left a:hover,nav.left a.active{color:var(--warm-mid);}
+  .logo{position:absolute;left:50%;transform:translateX(-50%);text-align:center;}
+  .header-icons{display:flex;gap:20px;align-items:center;}
+  .header-icons button{background:none;border:none;cursor:pointer;font-size:18px;color:var(--charcoal);position:relative;}
+  .cart-badge{position:absolute;top:-6px;right:-6px;background:var(--charcoal);color:white;width:16px;height:16px;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;}
+  .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--charcoal);}
+  .mobile-nav{display:flex;flex-direction:column;background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);position:sticky;top:70px;z-index:99;overflow:hidden;max-height:0;transition:max-height 0.25s ease;}
+  .mobile-nav.open{max-height:300px;}
+  .mobile-nav a{padding:16px 24px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.06);}
+
+  /* PAGE HERO */
+  .about-hero{position:relative;padding:96px 40px 88px;background:var(--sand);overflow:hidden;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .about-hero-inner{max-width:640px;position:relative;z-index:2;}
+  .about-eyebrow{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:18px;}
+  .about-hero h1{font-family:var(--serif);font-size:56px;font-weight:400;line-height:1.08;margin-bottom:20px;}
+  .about-hero p{font-size:14px;color:var(--charcoal);opacity:0.75;line-height:1.75;max-width:480px;}
+  .about-hero-ring{position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;border:1px solid rgba(26,24,20,0.1);z-index:1;}
+  .about-hero-ring.two{top:40px;right:40px;width:160px;height:160px;}
+
+  /* STORY */
+  .story{padding:80px 40px;display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:start;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .story-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:16px;}
+  .story-label::after{content:'';display:block;width:32px;height:1px;background:var(--charcoal);margin-top:10px;}
+  .story h2{font-family:var(--serif);font-size:34px;font-weight:400;line-height:1.15;max-width:340px;}
+  .story-body p{font-size:13px;line-height:1.9;color:var(--charcoal);opacity:0.85;margin-bottom:20px;max-width:560px;}
+  .story-body p:last-child{margin-bottom:0;}
+
+  /* VALUES */
+  .values{padding:80px 40px;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .values-header{max-width:520px;margin-bottom:48px;}
+  .values-header .story-label{margin-bottom:16px;}
+  .values-header h2{font-family:var(--serif);font-size:32px;font-weight:400;line-height:1.2;}
+  .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.06);border-top:1px solid rgba(0,0,0,0.06);border-bottom:1px solid rgba(0,0,0,0.06);}
+  .value-card{background:var(--cream);padding:36px 32px;}
+  .value-num{font-family:var(--serif);font-size:13px;color:var(--warm-mid);margin-bottom:24px;}
+  .value-card h3{font-size:14px;font-weight:500;letter-spacing:0.02em;margin-bottom:12px;}
+  .value-card p{font-size:12px;color:var(--warm-mid);line-height:1.8;}
+
+  /* MAKING */
+  .making{padding:0;display:grid;grid-template-columns:1fr 1fr;min-height:420px;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .making-img{background:linear-gradient(135deg,rgba(20,18,14,0.05),rgba(20,18,14,0.15)),var(--sand) url('https://res.cloudinary.com/lqdyfc0b/image/upload/v1789425911/Sec.png') center/cover no-repeat;min-height:340px;}
+  .making-text{padding:64px 56px;display:flex;flex-direction:column;justify-content:center;background:var(--bone);}
+  .making-text .story-label{margin-bottom:16px;}
+  .making-text h2{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.25;margin-bottom:20px;max-width:400px;}
+  .making-text p{font-size:13px;color:var(--charcoal);opacity:0.8;line-height:1.85;max-width:420px;}
+
+  /* CONTACT */
+  .contact{padding:80px 40px;}
+  .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .contact-left .story-label{margin-bottom:16px;}
+  .contact-left h2{font-family:var(--serif);font-size:32px;font-weight:400;margin-bottom:18px;line-height:1.2;}
+  .contact-left p{font-size:13px;color:var(--warm-mid);line-height:1.85;max-width:400px;margin-bottom:32px;}
+  .contact-detail{display:flex;align-items:flex-start;gap:16px;margin-bottom:22px;}
+  .contact-detail i{font-size:15px;color:var(--rust);margin-top:2px;width:18px;}
+  .contact-detail-text{display:flex;flex-direction:column;}
+  .contact-detail-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:4px;}
+  .contact-detail-value{font-size:13px;color:var(--charcoal);}
+  .contact-detail-value a{color:var(--charcoal);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.15);}
+  .contact-detail-value a:hover{border-color:var(--charcoal);}
+  .contact-socials{display:flex;gap:16px;margin-top:8px;}
+  .contact-socials a{font-size:17px;color:var(--charcoal);text-decoration:none;}
+  .contact-socials a:hover{color:var(--warm-mid);}
+
+  .contact-form{background:var(--bone);padding:40px;display:flex;flex-direction:column;gap:16px;}
+  .cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .cf-field{display:flex;flex-direction:column;gap:6px;}
+  .cf-field label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-mid);}
+  .cf-field input,.cf-field textarea{border:1px solid rgba(0,0,0,0.15);background:var(--cream);padding:12px 14px;font-size:12px;font-family:var(--sans);outline:none;color:var(--charcoal);width:100%;transition:border-color 0.2s;}
+  .cf-field input:focus,.cf-field textarea:focus{border-color:var(--charcoal);}
+  .cf-field textarea{resize:vertical;min-height:110px;}
+  .cf-submit{background:var(--charcoal);color:var(--cream);border:none;padding:15px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:opacity 0.2s;margin-top:4px;}
+  .cf-submit:hover{opacity:0.85;}
+
+  footer{background:var(--cream);border-top:1px solid rgba(0,0,0,0.08);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;}
+  .footer-copy{font-size:10px;color:var(--warm-mid);}
+  .footer-links{display:flex;gap:24px;}
+  .footer-links-centered{position:absolute;left:50%;transform:translateX(-50%);}
+  .footer-links a{font-size:10px;letter-spacing:0.08em;color:var(--charcoal);text-decoration:none;}
+  .footer-links a:hover{color:var(--warm-mid);}
+  .footer-social{display:flex;gap:16px;align-items:center;}
+  .footer-social-row{display:flex;align-items:center;gap:16px;}
+  .footer-social a{font-size:17px;color:var(--charcoal);text-decoration:none;transition:color 0.2s;display:inline-flex;align-items:center;}
+  .footer-social a:hover{color:var(--warm-mid);}
+  .footer-right{font-size:10px;color:var(--warm-mid);}
+
+  @media(max-width:1024px){
+    .story{grid-template-columns:1fr;gap:24px;}
+    .values-grid{grid-template-columns:1fr;}
+    .making{grid-template-columns:1fr;}
+    .contact-inner{grid-template-columns:1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:0 16px;} nav.left{display:none;} .hamburger{display:block;}
+    .announce{padding:8px 16px;font-size:10px;}
+    .about-hero{padding:56px 16px 48px;} .about-hero h1{font-size:36px;}
+    .story,.values,.contact{padding:48px 16px;}
+    .making-text{padding:40px 24px;} .making-img{min-height:240px;}
+    .values-header h2{font-size:26px;}
+    .cf-row{grid-template-columns:1fr;}
+    footer{padding:20px 16px;flex-direction:column;gap:16px;}
+    .footer-links-centered{position:static;transform:none;flex-wrap:wrap;justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">
+  <button>‹</button>
+  <span>FREE SHIPPING ON ORDERS ABOVE RS. 3000</span>
+  <div style="display:flex;align-items:center;gap:8px"><span class="pak">PAK ▾</span><button>›</button></div>
+</div>
+
+<header>
+  <button class="hamburger" aria-label="Menu" onclick="toggleMobileNav()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <nav class="left">
+    <a href="collection.html">Shop</a>
+    <a href="collection.html">New In</a>
+    <a href="collection.html">Collections</a>
+    <a href="about.html" class="active">About</a>
+  </nav>
+  <div class="logo">
+    <a href="index.html"><img src="https://res.cloudinary.com/lqdyfc0b/image/upload/v1789419232/Logo_-_Edges.png" alt="Aabroze" style="height:60px;width:60px;object-fit:contain;display:block;margin:0 auto;"></a>
+  </div>
+  <div class="header-icons">
+    <button aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg></button>
+    <button aria-label="Account"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+    <button aria-label="Cart" onclick="window.location.href='cart.html'" style="position:relative">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="collection.html" onclick="toggleMobileNav()">Shop</a>
+  <a href="about.html" onclick="toggleMobileNav()">About</a>
+  <a href="cart.html" onclick="toggleMobileNav()">Cart</a>
+</div>
+
+<section class="about-hero">
+  <div class="about-hero-ring"></div>
+  <div class="about-hero-ring two"></div>
+  <div class="about-hero-inner">
+    <div class="about-eyebrow">Our Story</div>
+    <h1>Clothes made for<br>the everyday.</h1>
+    <p>Aabroze started with a simple idea — that the clothes you reach for most often should be the ones that make you feel most like yourself. We design pieces that move between your ordinary Tuesday and your favourite mehfil, without asking you to choose.</p>
+  </div>
+</section>
+
+<section class="story">
+  <div>
+    <div class="story-label">HOW IT STARTED</div>
+    <h2>A brand built on the quiet moments in between.</h2>
+  </div>
+  <div class="story-body">
+    <p>Aabroze was born out of a frustration many women in Pakistan share: closets full of clothes for special occasions, and almost nothing that feels intentional for the everyday. We wanted to close that gap.</p>
+    <p>Every piece we design starts with the fabric — soft, breathable, and made to hold up to real life — before it ever becomes a print or a silhouette. We work with small local ateliers across Pakistan, keeping our runs limited so quality never gets rushed.</p>
+    <p>The name Aabroze means "everyday" in Persian-Urdu — a small word that carries the whole idea behind what we make: beauty that doesn't wait for an occasion.</p>
+  </div>
+</section>
+
+<section class="values">
+  <div class="values-header">
+    <div class="story-label">WHAT WE STAND FOR</div>
+    <h2>Three things guide every piece we put out.</h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-num">I.</div>
+      <h3>Fabric first</h3>
+      <p>We choose the textile before the design. If it doesn't feel right against the skin, it doesn't make the cut — no matter how it photographs.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">II.</div>
+      <h3>Made close to home</h3>
+      <p>Every piece is cut, stitched, and finished by artisans across Pakistan, in small batches that let us stay close to the details.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">III.</div>
+      <h3>Wearable elegance</h3>
+      <p>We design for real bodies and real days — pieces that hold up from the morning commute to a mehfil in the evening.</p>
+    </div>
+  </div>
+</section>
+
+<section class="making">
+  <div class="making-img"></div>
+  <div class="making-text">
+    <div class="story-label">THE PROCESS</div>
+    <h2>From fabric mill to your doorstep, in small careful batches.</h2>
+    <p>We keep our production runs deliberately small. It means some prints sell out and don't come back — but it also means every piece gets the attention of a workshop, not a factory line.</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="story-label">GET IN TOUCH</div>
+      <h2>Questions about an order, a fit, or a fabric?</h2>
+      <p>Our team usually replies within a day. For the fastest response, reach out on WhatsApp — we're happy to help with sizing, order tracking, or anything else.</p>
+
+      <div class="contact-detail">
+        <i class="fa-brands fa-whatsapp"></i>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">WhatsApp</span>
+          <span class="contact-detail-value"><a href="https://wa.me/923282301296" target="_blank">+92 328 2301296</a></span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <i class="fa-solid fa-envelope"></i>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value"><a href="mailto:hello@aabroze.pk">hello@aabroze.pk</a></span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">Based in</span>
+          <span class="contact-detail-value">Karachi, Pakistan</span>
+        </div>
+      </div>
+
+      <div class="contact-socials">
+        <a href="https://www.instagram.com/aabroze.pk" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@aabroze.pk" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.facebook.com/aabroze.pk" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.pinterest.com/aabroze" target="_blank" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="return handleContactSubmit(event)">
+      <div class="cf-row">
+        <div class="cf-field"><label>Name</label><input type="text" placeholder="Your name" required></div>
+        <div class="cf-field"><label>Email</label><input type="email" placeholder="you@email.com" required></div>
+      </div>
+      <div class="cf-field"><label>Subject</label><input type="text" placeholder="Order help, sizing, wholesale…"></div>
+      <div class="cf-field"><label>Message</label><textarea placeholder="Tell us a bit about what you need…" required></textarea></div>
+      <button type="submit" class="cf-submit">SEND MESSAGE →</button>
+    </form>
+  </div>
+</section>
+
+<footer style="justify-content:space-between;">
+  <div class="footer-copy">© 2026 Aabroze. All rights reserved.</div>
+  <div class="footer-links footer-links-centered">
+    <a href="collection.html">Shop</a>
+    <a href="collection.html">Collections</a>
+    <a href="about.html">About</a>
+    <a href="about.html#contact">Contact</a>
+  </div>
+  <div class="footer-social-row">
+    <div class="footer-social">
+      <a href="https://www.instagram.com/aabroze.pk" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@aabroze.pk" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/aabroze.pk" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://www.pinterest.com/aabroze" target="_blank" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+      <a href="https://www.youtube.com/@aabroze" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+    <div class="footer-right">PK</div>
+  </div>
+</footer>
+
+<script>
+  function getCart(){try{return JSON.parse(localStorage.getItem('aabroze_cart')||'[]');}catch{return[];}}
+  function updateBadge(){const n=getCart().reduce((s,i)=>s+i.qty,0);document.getElementById('cartBadge').textContent=n;}
+  function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');}
+  function handleContactSubmit(e){
+    e.preventDefault();
+    const t=document.createElement('div');
+    t.textContent='Message sent — we\'ll be in touch soon!';
+    t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--cream);padding:12px 28px;font-size:11px;letter-spacing:0.1em;z-index:999;';
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),2400);
+    e.target.reset();
+    return false;
+  }
+  updateBadge();
+</script>
+</body>
+</html>
